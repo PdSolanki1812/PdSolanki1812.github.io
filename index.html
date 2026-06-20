@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pooja Solanki — Embedded Firmware Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+
+:root{
+  --bg:#07070f;
+  --bg1:#0d0d1a;
+  --bg2:#12121f;
+  --border:#1c1c30;
+  --v:#a78bfa;
+  --b:#60a5fa;
+  --g:#34d399;
+  --text:#f1f5f9;
+  --dim:#64748b;
+  --dim2:#2d3748;
+}
+
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--v);border-radius:2px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 2.5rem;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(7,7,15,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(167,139,250,0.08);
+  transition:background .3s;
+}
+.n-logo{
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--v),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.n-links{display:flex;gap:2.5rem;list-style:none}
+.n-links a{
+  color:var(--dim);font-size:.82rem;text-decoration:none;
+  letter-spacing:.06em;text-transform:uppercase;font-weight:500;
+  position:relative;transition:color .2s;padding-bottom:2px;
+}
+.n-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--v);transition:width .3s;
+}
+.n-links a:hover{color:var(--text)}
+.n-links a:hover::after{width:100%}
+.n-btn{
+  font-size:.78rem;font-weight:700;padding:.45rem 1.2rem;
+  border-radius:6px;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid rgba(167,139,250,0.4);color:var(--v);
+  background:rgba(167,139,250,0.06);transition:all .25s;
+}
+.n-btn:hover{background:rgba(167,139,250,0.15);border-color:var(--v);box-shadow:0 0 20px rgba(167,139,250,0.2)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:80px 2.5rem 4rem;max-width:1100px;margin:0 auto;
+  position:relative;
+}
+/* orbs */
+.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(100px);opacity:.12;
+  animation:floatorb 12s ease-in-out infinite;
+}
+.orb1{width:600px;height:600px;background:var(--v);top:-200px;left:-100px;animation-delay:0s}
+.orb2{width:500px;height:500px;background:var(--b);bottom:-150px;right:-100px;animation-delay:-4s}
+.orb3{width:300px;height:300px;background:var(--g);top:40%;left:50%;animation-delay:-8s;opacity:.07}
+@keyframes floatorb{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-40px) scale(1.05)}
+  66%{transform:translate(-20px,30px) scale(.95)}
+}
+
+.hero-content{position:relative;z-index:1}
+
+.hero-pill{
+  display:inline-flex;align-items:center;gap:.6rem;margin-bottom:2rem;
+  background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);
+  border-radius:999px;padding:.35rem 1rem;font-size:.78rem;
+  font-family:'JetBrains Mono',monospace;color:var(--g);
+}
+.hero-pill-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--g);
+  box-shadow:0 0 8px var(--g);animation:glow 2s ease-in-out infinite;
+}
+@keyframes glow{0%,100%{opacity:1;box-shadow:0 0 6px var(--g)}50%{opacity:.6;box-shadow:0 0 2px var(--g)}}
+
+.hero h1{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(3.2rem,7vw,6rem);
+  font-weight:900;line-height:1.0;
+  letter-spacing:-.04em;margin-bottom:1.5rem;
+}
+.hero h1 .name{
+  background:linear-gradient(135deg,#fff 0%,#c4b5fd 50%,var(--b) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;
+}
+.hero h1 .role{
+  color:#1e2030;
+  -webkit-text-stroke:1px rgba(255,255,255,0.15);
+  display:block;
+}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--dim);line-height:1.8;
+  max-width:520px;margin-bottom:2.5rem;
+}
+.hero-sub span{color:#94a3b8}
+
+.hero-btns{display:flex;gap:1rem;margin-bottom:3rem;flex-wrap:wrap}
+.btn-grad{
+  padding:.8rem 2rem;border-radius:8px;font-weight:700;font-size:.9rem;
+  text-decoration:none;letter-spacing:.02em;
+  background:linear-gradient(135deg,var(--v),var(--b));color:#fff;
+  transition:all .25s;box-shadow:0 4px 20px rgba(167,139,250,.3);
+}
+.btn-grad:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(167,139,250,.45)}
+.btn-ghost2{
+  padding:.8rem 2rem;border-radius:8px;font-size:.9rem;
+  text-decoration:none;color:var(--dim);
+  border:1px solid var(--border);transition:all .25s;
+}
+.btn-ghost2:hover{border-color:rgba(167,139,250,.4);color:var(--text)}
+
+.hero-stack{display:flex;flex-wrap:wrap;gap:.5rem}
+.stag{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  color:var(--dim);background:var(--bg1);
+  border:1px solid var(--border);border-radius:4px;padding:.25rem .7rem;
+  transition:all .2s;
+}
+.stag:hover{border-color:rgba(167,139,250,.3);color:var(--v)}
+
+/* currently */
+.currently{
+  margin-top:2.5rem;display:inline-flex;align-items:flex-start;gap:.9rem;
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.3rem;max-width:500px;
+}
+.cur-icon{font-size:1.2rem;margin-top:1px;flex-shrink:0}
+.cur-text{font-size:.82rem;color:var(--dim);line-height:1.65}
+.cur-text b{color:var(--text);font-weight:500}
+
+/* ── SECTION BASE ── */
+.sec{max-width:1100px;margin:0 auto;padding:7rem 2.5rem;position:relative;z-index:1}
+.sec-label{
+  display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;
+}
+.sec-label::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.sec-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  color:var(--v);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
+}
+h2{
+  font-family:'Outfit',sans-serif;font-size:2.2rem;font-weight:800;
+  color:var(--text);letter-spacing:-.03em;
+}
+
+/* ── ABOUT ── */
+.about-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
+.about-p{color:var(--dim);font-size:.95rem;line-height:1.9;margin-bottom:1.1rem}
+.about-p b{color:#94a3b8;font-weight:400}
+.about-right{display:flex;flex-direction:column;gap:1rem}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.stt{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:10px;padding:1.3rem;text-align:center;
+  transition:border-color .2s,transform .2s;
+}
+.stt:hover{border-color:rgba(167,139,250,.3);transform:translateY(-2px)}
+.stt-n{
+  font-family:'Outfit',sans-serif;font-size:2.3rem;font-weight:900;display:block;
+  background:linear-gradient(135deg,var(--v),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:.3rem;
+}
+.stt-l{font-size:.72rem;color:var(--dim);letter-spacing:.04em}
+.info-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.2rem;
+}
+.info-k{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.info-v{font-size:.88rem;color:var(--text)}
+
+/* ── SKILLS ── */
+.skills-outer{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  background:var(--border);gap:1px;
+}
+.sg{
+  background:var(--bg);padding:2rem;
+  transition:background .2s;
+}
+.sg:hover{background:var(--bg1)}
+.sg-name{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--v);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1.2rem;
+}
+.sg-tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.sgt{
+  font-size:.78rem;color:var(--dim);
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:5px;padding:.25rem .65rem;
+  transition:all .2s;font-family:'JetBrains Mono',monospace;
+}
+.sgt:hover{color:var(--text);border-color:rgba(167,139,250,.3)}
+
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.pc{
+  background:var(--bg1);border:1px solid var(--border);border-radius:14px;
+  padding:1.8rem;display:flex;flex-direction:column;gap:1rem;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.pc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--v),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.pc:hover{transform:translateY(-4px);border-color:rgba(167,139,250,.25);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.pc:hover::after{opacity:1}
+.pc-top{display:flex;justify-content:space-between;align-items:center}
+.pc-num{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim2)}
+.pc-status{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  padding:.18rem .6rem;border-radius:999px;
+}
+.pc-status.live{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--g)}
+.pc-status.live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--g);animation:glow 2s infinite}
+.pc-status.done{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);color:var(--v)}
+.pc-icon{font-size:1.8rem}
+.pc-title{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.pc-desc{font-size:.83rem;color:var(--dim);line-height:1.75;flex:1}
+.pc-foot{display:flex;justify-content:space-between;align-items:center;padding-top:.4rem;border-top:1px solid var(--border)}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.pct{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--dim);background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:.15rem .5rem}
+.pc-link{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--dim);text-decoration:none;transition:color .2s}
+.pc-link:hover{color:var(--v)}
+
+/* ── EXPERIENCE ── */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{
+  display:grid;grid-template-columns:200px 1fr;
+  padding:2.5rem 0;border-bottom:1px solid var(--border);
+  gap:0 3rem;position:relative;
+}
+.exp-item:last-child{border-bottom:none}
+.exp-item::before{
+  content:'';position:absolute;left:0;top:2.5rem;
+  width:6px;height:6px;border-radius:50%;background:var(--v);
+  box-shadow:0 0 10px var(--v);display:none;
+}
+.exp-left{}
+.exp-date{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--v);margin-bottom:.3rem}
+.exp-type{font-size:.72rem;color:var(--dim2);font-family:'JetBrains Mono',monospace}
+.exp-right{}
+.current-badge{
+  display:inline-block;font-size:.62rem;font-family:'JetBrains Mono',monospace;
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);
+  color:var(--g);border-radius:4px;padding:.15rem .6rem;margin-bottom:.75rem;letter-spacing:.06em;
+}
+.exp-role{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.exp-co{
+  font-size:.85rem;margin-bottom:1rem;
+  background:linear-gradient(135deg,var(--v),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-weight:500;
+}
+.exp-pts{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.exp-pts li{font-size:.85rem;color:var(--dim);padding-left:1.2rem;position:relative;line-height:1.65}
+.exp-pts li::before{content:'▸';position:absolute;left:0;color:rgba(167,139,250,.5);font-size:.7rem;top:1px}
+
+.other-head{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim2);
+  text-transform:uppercase;letter-spacing:.12em;
+  margin:2.5rem 0 1rem;
+}
+.other-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.oc{
+  background:var(--bg1);border:1px dashed var(--border);
+  border-radius:10px;padding:1.2rem 1.4rem;transition:border-color .2s;
+}
+.oc:hover{border-color:rgba(167,139,250,.2)}
+.oc-tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.oc-title{font-size:.9rem;font-weight:600;color:#94a3b8;margin-bottom:.15rem}
+.oc-org{font-size:.78rem;color:var(--dim2);margin-bottom:.5rem}
+.oc-desc{font-size:.78rem;color:var(--dim2);line-height:1.65}
+
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.2rem}
+.ec{
+  background:var(--bg1);border:1px solid var(--border);border-radius:10px;padding:1.4rem;
+  transition:border-color .2s,transform .2s;
+}
+.ec:hover{border-color:rgba(96,165,250,.3);transform:translateY(-2px)}
+.ec-year{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--b);margin-bottom:.5rem}
+.ec-deg{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.ec-inst{font-size:.78rem;color:var(--dim)}
+.cert-c{
+  background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(96,165,250,.06));
+  border:1px solid rgba(167,139,250,.2);border-radius:10px;
+  padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem;
+}
+.cert-ico{font-size:1.4rem}
+.cert-n{font-size:.9rem;font-weight:600;color:var(--text)}
+.cert-o{font-size:.78rem;color:var(--dim);margin-top:.15rem}
+
+/* ── CONTACT ── */
+.contact-inner{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:16px;padding:4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+}
+.ct-h{
+  font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;
+  letter-spacing:-.03em;margin-bottom:1rem;
+  background:linear-gradient(135deg,var(--text),#94a3b8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ct-p{font-size:.9rem;color:var(--dim);line-height:1.8;margin-bottom:1rem}
+.city-wrap{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+.city{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  border:1px solid var(--border);color:var(--dim);
+  border-radius:4px;padding:.2rem .6rem;
+}
+.cl-list{display:flex;flex-direction:column;gap:.75rem}
+.cl{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.2rem;background:var(--bg2);
+  border:1px solid var(--border);border-radius:10px;
+  text-decoration:none;color:var(--dim);font-size:.85rem;
+  transition:all .25s;
+}
+.cl:hover{
+  border-color:rgba(167,139,250,.3);color:var(--text);
+  transform:translateX(6px);
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.cl-ico{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.cl-main{flex:1}
+.cl-sub{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim2);margin-top:.1rem}
+.cl-arr{color:var(--dim2);font-size:.8rem;transition:color .2s;margin-left:auto}
+.cl:hover .cl-arr{color:var(--v)}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:relative;z-index:1;
+}
+.foot-l{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dim2)}
+.foot-l b{color:var(--dim)}
+.foot-r{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--dim2)}
+
+/* ── FADE IN ── */
+.fade{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade.in{opacity:1;transform:none}
+.fade-d1{transition-delay:.1s}
+.fade-d2{transition-delay:.2s}
+.fade-d3{transition-delay:.3s}
+
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .n-links{display:none}
+  .hero{padding:90px 1.2rem 3rem}
+  .sec{padding:4rem 1.2rem}
+  .about-wrap,.proj-grid,.other-row,.contact-inner,.edu-grid{grid-template-columns:1fr}
+  .skills-outer{grid-template-columns:1fr 1fr}
+  .exp-item{grid-template-columns:1fr;gap:.5rem}
+  .contact-inner{padding:2rem}
+  footer{flex-direction:column;gap:.5rem;padding:1.5rem 1.2rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- floating orbs -->
+<div class="orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="n-logo">PS</div>
+  <ul class="n-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:18ec.solankipooja@gmail.com" class="n-btn">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;border-bottom:1px solid var(--border)">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        Embedded Firmware Engineer · Rajkot, Gujarat
+      </div>
+
+      <h1>
+        <span class="name">Pooja Solanki</span>
+        <span class="role">Firmware Engineer</span>
+      </h1>
+
+      <p class="hero-sub">
+        I build firmware for <span>STM32, ESP32 and ARM</span> microcontrollers.
+        Sensors, communication protocols, RTOS — low-level stuff that makes hardware work.
+        Based in Rajkot · open to relocate.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#projects" class="btn-grad">View My Work</a>
+        <a href="#contact" class="btn-ghost2">Say Hello</a>
+      </div>
+
+      <div class="hero-stack">
+        <span class="stag">C / Embedded C</span>
+        <span class="stag">STM32</span>
+        <span class="stag">ESP32</span>
+        <span class="stag">FreeRTOS</span>
+        <span class="stag">UART · SPI · I²C</span>
+        <span class="stag">MQTT</span>
+        <span class="stag">MODBUS</span>
+        <span class="stag">BLE</span>
+      </div>
+
+      <div class="currently">
+        <div class="cur-icon">⚡</div>
+        <div class="cur-text">
+          Currently building a <b>Smart Irrigation System</b> at Aartronix Innovations —
+          ESP32, 6 sensors, Quectel GSM module
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec fade" id="about">
+  <div class="sec-label">
+    <span class="sec-tag">01 / About</span>
+  </div>
+  <div class="about-wrap">
+    <div>
+      <p class="about-p">
+        Firmware engineer from Rajkot with a background in embedded systems,
+        microcontroller programming, and industrial automation.
+      </p>
+      <p class="about-p">
+        My work spans <b>microcontroller-based projects</b> and
+        <b>embedded firmware for industrial automation</b> and wireless control systems.
+        I have built an <b>industrial gate controller</b> and a
+        <b>Smart Irrigation System</b> project.
+      </p>
+      <p class="about-p">
+        I'm passionate about developing scalable, low-level firmware for
+        <b>microcontroller-based IoT products</b> — and I love the challenge
+        of debugging at the hardware-software boundary.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="stat-row">
+        <div class="stt"><span class="stt-n">1.5+</span><div class="stt-l">Years Exp.</div></div>
+        <div class="stt"><span class="stt-n">2</span><div class="stt-l">Companies</div></div>
+        <div class="stt"><span class="stt-n">4+</span><div class="stt-l">Projects</div></div>
+        <div class="stt"><span class="stt-n">6+</span><div class="stt-l">Protocols</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-k">Education</div>
+        <div class="info-v">B.E. Electronics &amp; Communication<br/><span style="font-size:.8rem;color:var(--dim)">Gujarat Technological University, 2022</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-k">Currently learning</div>
+        <div class="info-v">FreeRTOS internals &amp; BLE provisioning flows</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="sec fade" id="skills" style="padding-top:0">
+  <div class="sec-label">
+    <span class="sec-tag">02 / Skills</span>
+  </div>
+  <div class="skills-outer">
+    <div class="sg">
+      <div class="sg-name">Languages</div>
+      <div class="sg-tags">
+        <span class="sgt">C</span><span class="sgt">C++</span>
+        <span class="sgt">Embedded C</span><span class="sgt">ARM Assembly</span>
+      </div>
+    </div>
+    <div class="sg">
+      <div class="sg-name">Microcontrollers</div>
+      <div class="sg-tags">
+        <span class="sgt">STM32</span><span class="sgt">ESP32</span>
+        <span class="sgt">LPC2129 ARM7</span><span class="sgt">Arduino</span><span class="sgt">ARM Cortex-M</span>
+      </div>
+    </div>
+    <div class="sg">
+      <div class="sg-name">RTOS &amp; Frameworks</div>
+      <div class="sg-tags">
+        <span class="sgt">FreeRTOS</span><span class="sgt">Bare Metal</span>
+        <span class="sgt">ESP-IDF</span><span class="sgt">Linux</span>
+      </div>
+    </div>
+    <div class="sg">
+      <div class="sg-name">Protocols</div>
+      <div class="sg-tags">
+        <span class="sgt">UART</span><span class="sgt">SPI</span><span class="sgt">I²C</span>
+        <span class="sgt">MODBUS RS485</span><span class="sgt">MQTT</span><span class="sgt">BLE</span>
+      </div>
+    </div>
+    <div class="sg">
+      <div class="sg-name">Tools &amp; IDEs</div>
+      <div class="sg-tags">
+        <span class="sgt">STM32CubeIDE</span><span class="sgt">STM32CubeMX</span>
+        <span class="sgt">Keil IDE</span><span class="sgt">VS Code</span>
+        <span class="sgt">Segger Studio</span>
+      </div>
+    </div>
+    <div class="sg">
+      <div class="sg-name">Wireless &amp; IoT</div>
+      <div class="sg-tags">
+        <span class="sgt">SmartConfig</span><span class="sgt">BLE Provisioning</span>
+        <span class="sgt">GSM / Quectel</span><span class="sgt">MQTT Cloud</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec fade" id="projects" style="padding-top:0">
+  <div class="sec-label">
+    <span class="sec-tag">03 / Projects</span>
+  </div>
+
+  <!-- note -->
+  <div style="display:flex;align-items:flex-start;gap:.75rem;background:var(--bg1);border:1px solid var(--border);border-left:2px solid var(--dim);border-radius:8px;padding:.9rem 1.2rem;margin-bottom:1.5rem;">
+    <span style="color:var(--dim);font-size:.95rem;flex-shrink:0">ℹ️</span>
+    <p style="font-size:.8rem;color:var(--dim);line-height:1.7;font-family:'JetBrains Mono',monospace;">
+      Source code for industrial projects is proprietary and was developed during employment. GitHub links are not available for those projects out of respect for company confidentiality.
+    </p>
+  </div>
+
+  <div class="proj-grid">
+
+    <div class="pc">
+      <div class="pc-top">
+        <span class="pc-num">#01</span>
+        <span class="pc-status live">In Progress</span>
+      </div>
+      <div class="pc-icon">💧</div>
+      <div class="pc-title">Smart Water Irrigation System</div>
+      <p class="pc-desc">Industrial ESP32 firmware monitoring 6 sensor types — water meter, pressure gauge, pH, wind speed, temperature and humidity. Quectel GSM for remote data logging and relay-driven automated irrigation control.</p>
+      <div class="pc-foot">
+        <div class="pc-tags">
+          <span class="pct">ESP32</span><span class="pct">Embedded C</span><span class="pct">GSM</span><span class="pct">Multi-Sensor</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-top">
+        <span class="pc-num">#02</span>
+        <span class="pc-status done">Completed</span>
+      </div>
+      <div class="pc-icon">🚪</div>
+      <div class="pc-title">Automated Gate Controller</div>
+      <p class="pc-desc">STM32-based gate system with DS18B20 temperature sensing, OLED display for live status, push-button manual override, and 433MHz RF module for wireless remote operation. All drivers written from scratch.</p>
+      <div class="pc-foot">
+        <div class="pc-tags">
+          <span class="pct">STM32</span><span class="pct">Embedded C</span><span class="pct">RF 433MHz</span><span class="pct">OLED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-top">
+        <span class="pc-num">#03</span>
+        <span class="pc-status done">Completed</span>
+      </div>
+      <div class="pc-icon">📡</div>
+      <div class="pc-title">ESP32 IoT Edge Node</div>
+      <p class="pc-desc">Freelance project built with ESP-IDF — SmartConfig and BLE provisioning for device onboarding, MQTT for cloud publishing, PIR sensor input, and real-time sensor data acquisition pipeline.</p>
+      <div class="pc-foot">
+        <div class="pc-tags">
+          <span class="pct">ESP-IDF</span><span class="pct">MQTT</span><span class="pct">BLE</span><span class="pct">SmartConfig</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-top">
+        <span class="pc-num">#04</span>
+        <span class="pc-status done">Completed</span>
+      </div>
+      <div class="pc-icon">🔧</div>
+      <div class="pc-title">C Preprocessor in C</div>
+      <p class="pc-desc">Built a mini C preprocessor handling comment removal, header file inclusion and macro expansion using custom functions — written to understand what really happens before the compiler runs.</p>
+      <div class="pc-foot">
+        <div class="pc-tags">
+          <span class="pct">C</span><span class="pct">Systems Programming</span><span class="pct">Compiler</span>
+        </div>
+        <a href="#" class="pc-link">GitHub ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="sec fade" id="experience" style="padding-top:0">
+  <div class="sec-label">
+    <span class="sec-tag">04 / Experience</span>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-date">Aug 2025 – Present</div>
+        <div class="exp-type">Full-time</div>
+      </div>
+      <div class="exp-right">
+        <div class="current-badge">● Current Role</div>
+        <div class="exp-role">Intern – Junior Embedded Engineer</div>
+        <div class="exp-co">Aartronix Innovations Pvt Ltd</div>
+        <ul class="exp-pts">
+          <li>Debugging STM32 firmware — load cell integration and signal validation</li>
+          <li>Client-specific firmware enhancements with system-level testing</li>
+          <li>Building Smart Irrigation System: ESP32 + 6 sensors + GSM communication</li>
+          <li>Load cell interfacing for industrial measurement applications</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-date">Jan 2022 – Apr 2023</div>
+        <div class="exp-type">Intern → Full-time</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Embedded Firmware Developer</div>
+        <div class="exp-co">Archana Automation</div>
+        <ul class="exp-pts">
+          <li>STM32 firmware for industrial devices — gate controllers, load cells, temp systems</li>
+          <li>Wrote I²C, SPI, UART and MODBUS RS485 communication drivers</li>
+          <li>OLED display, RF remote control, interrupt-driven sensor handling</li>
+          <li>Delivered client-specific firmware from requirement to working hardware</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="other-head">// Freelance &amp; Training</div>
+  <div class="other-row">
+    <div class="oc">
+      <div class="oc-tag">Freelance · Apr – May 2025</div>
+      <div class="oc-title">IoT Edge Firmware</div>
+      <div class="oc-org">Justenable LLP</div>
+      <div class="oc-desc">ESP32 + ESP-IDF — MQTT, BLE provisioning, SmartConfig, real-time sensor acquisition for a client.</div>
+    </div>
+    <div class="oc">
+      <div class="oc-tag">Training / Cert · Oct 2024 – Jan 2025</div>
+      <div class="oc-title">Lab Coordinator &amp; Embedded Cert.</div>
+      <div class="oc-org">Vector India Pvt Ltd</div>
+      <div class="oc-desc">Mentored students on ARM7 &amp; Keil. Certified in C, Embedded C, C++, RTOS, ARM architecture.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="sec fade" id="education" style="padding-top:0">
+  <div class="sec-label">
+    <span class="sec-tag">05 / Education</span>
+  </div>
+  <div class="edu-grid">
+    <div class="ec">
+      <div class="ec-year">2022 · Degree</div>
+      <div class="ec-deg">B.E. Electronics &amp; Communication</div>
+      <div class="ec-inst">Gujarat Technological University</div>
+    </div>
+    <div class="ec">
+      <div class="ec-year">2018 · HSC 12th</div>
+      <div class="ec-deg">Higher Secondary (GSEB)</div>
+      <div class="ec-inst">Shree G. K. Dholakiya School</div>
+    </div>
+    <div class="ec">
+      <div class="ec-year">2016 · SSC 10th</div>
+      <div class="ec-deg">Secondary School (GSEB)</div>
+      <div class="ec-inst">Shree Mahatma Gandhi School</div>
+    </div>
+  </div>
+  <div class="cert-c">
+    <div class="cert-ico">🎓</div>
+    <div>
+      <div class="cert-n">Embedded Systems Certification</div>
+      <div class="cert-o">Vector India Pvt Ltd · C, Embedded C, C++, RTOS, ARM Architecture, Keil IDE</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec fade" id="contact" style="padding-top:0">
+  <div class="sec-label">
+    <span class="sec-tag">06 / Contact</span>
+  </div>
+  <div class="contact-inner">
+    <div>
+      <div class="ct-h">Let's work together.</div>
+      <p class="ct-p">
+        Have a project or want to collaborate on something embedded? Feel free to reach out.
+      </p>
+      <p class="ct-p">I reply to emails within a day, usually faster.</p>
+      <p style="font-size:.78rem;color:var(--dim2);margin-top:.75rem;font-family:'JetBrains Mono',monospace;">// open to relocate</p>
+      <div class="city-wrap">
+        <span class="city">Ahmedabad</span>
+        <span class="city">Bangalore</span>
+        <span class="city">Pune</span>
+        <span class="city">Mumbai</span>
+        <span class="city">Baroda</span>
+      </div>
+    </div>
+    <div class="cl-list">
+      <a href="mailto:18ec.solankipooja@gmail.com" class="cl">
+        <span class="cl-ico">✉️</span>
+        <div class="cl-main">
+          <div>18ec.solankipooja@gmail.com</div>
+          <div class="cl-sub">email · preferred</div>
+        </div>
+        <span class="cl-arr">↗</span>
+      </a>
+      <a href="tel:+918758312717" class="cl">
+        <span class="cl-ico">📱</span>
+        <div class="cl-main">
+          <div>+91 87583 12717</div>
+          <div class="cl-sub">phone / whatsapp</div>
+        </div>
+        <span class="cl-arr">↗</span>
+      </a>
+      <a href="https://github.com/PdSolanki1812" target="_blank" class="cl">
+        <span class="cl-ico">🐙</span>
+        <div class="cl-main">
+          <div>github.com/PdSolanki1812</div>
+          <div class="cl-sub">code &amp; projects</div>
+        </div>
+        <span class="cl-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/pooja-solanki-embedded-firmware-developer/" target="_blank" class="cl">
+        <span class="cl-ico">💼</span>
+        <div class="cl-main">
+          <div>pooja-solanki-embedded-firmware-developer</div>
+          <div class="cl-sub">linkedin profile</div>
+        </div>
+        <span class="cl-arr">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-l">© 2026 <b>Pooja Solanki</b> · Rajkot, Gujarat 🇮🇳</div>
+  <div class="foot-r">built with HTML &amp; CSS · GitHub Pages</div>
+</footer>
+
+<script>
+// fade in
+const els=document.querySelectorAll('.fade');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:0.07});
+els.forEach(el=>io.observe(el));
+
+// nav highlight
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.n-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-140)cur=s.id});
+  links.forEach(a=>{
+    const active=a.getAttribute('href')==='#'+cur;
+    a.style.color=active?'var(--text)':'';
+    const line=a.querySelector('::after');
+  });
+});
+</script>
+</body>
+</html>
