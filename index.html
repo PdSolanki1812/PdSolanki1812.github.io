@@ -108,13 +108,13 @@ nav{
   display:block;
 }
 .hero h1 .role{
-  color:var(--dim);
-  font-size:clamp(1.5rem,3.5vw,2.8rem);
-  font-weight:400;
   display:block;
-  margin-top:.4rem;
-  letter-spacing:-.01em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,0.1);
+  margin-top:-.15em;
+  letter-spacing:.02em;
 }
+.ghost-text{ display:none; }
 
 .hero-sub{
   font-size:1.05rem;color:var(--dim);line-height:1.8;
@@ -417,7 +417,8 @@ footer{
 </nav>
 
 <!-- HERO -->
-<section style="position:relative;min-height:100vh;display:flex;align-items:center;border-bottom:1px solid var(--border)">
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;border-bottom:1px solid var(--border);overflow:hidden">
+  <div class="ghost-text">FIRMWARE ENGINEER</div>
   <div class="hero">
     <div class="hero-content">
       <div class="hero-pill">
